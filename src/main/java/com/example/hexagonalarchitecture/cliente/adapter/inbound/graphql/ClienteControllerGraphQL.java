@@ -1,43 +1,47 @@
-package com.example.hexagonalarchitecture.cliente.adapter.inbound.rest;
+package com.example.hexagonalarchitecture.cliente.adapter.inbound.graphql;
 
 import com.example.hexagonalarchitecture.cliente.domain.model.ClienteModel;
 import com.example.hexagonalarchitecture.cliente.domain.model.dto.ClienteInputDto;
 import com.example.hexagonalarchitecture.cliente.domain.ports.in.ClienteApiUseCase;
 import com.example.hexagonalarchitecture.cliente.domain.ports.in.ClienteUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-@RequestMapping(path = "/clientes")
+@Controller
 @RequiredArgsConstructor
-public class ClienteController implements ClienteApiUseCase {
+public class ClienteControllerGraphQL implements ClienteApiUseCase {
 
     private final ClienteUseCase clienteUseCase;
 
     @Override
-    @GetMapping
+    @QueryMapping
     public List<ClienteModel> buscarClientes() {
         return clienteUseCase.buscarClientes();
     }
 
+    @QueryMapping
     @Override
-    @GetMapping("/{id}")
-    public ClienteModel buscarClientePorId(@PathVariable UUID id) {
+    public ClienteModel buscarClientePorId(@Argument UUID id) {
         return clienteUseCase.buscarClientePorId(id);
     }
 
+    @MutationMapping
     @Override
-    @PostMapping
-    public ClienteModel salvarCliente(@RequestBody ClienteInputDto clienteInputDto) {
+    public ClienteModel salvarCliente(@Argument("payload") ClienteInputDto clienteInputDto) {
         return clienteUseCase.salvarCliente(clienteInputDto);
     }
 
+    @MutationMapping
     @Override
-    @DeleteMapping("/{id}")
-    public void excluirCliente(@PathVariable UUID id) {
+    public void excluirCliente(@Argument UUID id) {
         clienteUseCase.excluirCliente(id);
     }
+
+
 }

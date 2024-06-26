@@ -1,14 +1,14 @@
 package com.example.hexagonalarchitecture.cliente.adapter.outbound.viacep;
 
 import com.example.hexagonalarchitecture.cliente.domain.model.EnderecoModel;
-import com.example.hexagonalarchitecture.cliente.domain.ports.out.ViaCepRepository;
+import com.example.hexagonalarchitecture.cliente.domain.ports.out.ViaCepRepositoryPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Slf4j
-public class ViaCepService implements ViaCepRepository {
+public class ViaCepServicePort implements ViaCepRepositoryPort {
 
 
     @Override

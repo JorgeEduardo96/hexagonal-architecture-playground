@@ -1,20 +1,11 @@
 package com.example.hexagonalarchitecture.cliente.domain.model.dto;
 
 
-import lombok.Data;
-
 import static com.example.hexagonalarchitecture.cliente.domain.util.EmailUtil.validateEmail;
 
-@Data
-public class ClienteInputDto {
+public record ClienteInputDto(String nome, String cpf, String email, String telefone, String cep) {
 
-    private String nome;
-    private String cpf;
-    private String email;
-    private String telefone;
-    private String cep;
-
-    public ClienteInputDto(String nome, String cpf, String email, String telefone, String cep) throws IllegalArgumentException {
+    public ClienteInputDto(String nome, String cpf, String email, String telefone, String cep) {
         if (!nome.isBlank()) {
             this.nome = nome;
         } else throw new IllegalArgumentException("O campo nome deve ser preenchido.");

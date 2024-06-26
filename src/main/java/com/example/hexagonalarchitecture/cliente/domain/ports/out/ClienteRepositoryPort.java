@@ -5,7 +5,7 @@ import com.example.hexagonalarchitecture.cliente.domain.model.ClienteModel;
 import java.util.List;
 import java.util.UUID;
 
-public interface ClienteRepository {
+public interface ClienteRepositoryPort {
 
     List<ClienteModel> findAll();
 

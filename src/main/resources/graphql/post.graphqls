@@ -1,0 +1,35 @@
+input ClienteInputDto {
+    nome: String!
+    cpf: String!
+    email: String!
+    telefone: String!
+    cep: String!
+}
+
+type ClienteModel {
+    id: ID!
+    nome: String!
+    cpf: String!
+    email: String
+    telefone: String!
+    endereco: EnderecoModel
+}
+
+type EnderecoModel {
+    clienteId: ID!
+    logradouro: String!
+    bairro: String!
+    localidade: String!
+    uf: String!
+    cep: String!
+}
+
+type Query {
+    buscarClientes: [ClienteModel]!
+    buscarClientePorId(id: ID!): ClienteModel!
+}
+
+type Mutation {
+    salvarCliente(payload: ClienteInputDto!): ClienteModel
+    excluirCliente(id: ID!): Boolean!
+}
