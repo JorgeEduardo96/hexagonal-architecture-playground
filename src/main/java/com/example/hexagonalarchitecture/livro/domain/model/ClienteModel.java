@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record LivroModel(UUID id, String titulo, String autor, String isbn, String editora) {
+public record ClienteModel(UUID id, String nome) {
 }

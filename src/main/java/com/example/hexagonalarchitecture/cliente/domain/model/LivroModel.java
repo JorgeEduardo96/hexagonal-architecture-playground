@@ -1,4 +1,4 @@
-package com.example.hexagonalarchitecture.livro.domain.model;
+package com.example.hexagonalarchitecture.cliente.domain.model;
 
 import lombok.Builder;
 

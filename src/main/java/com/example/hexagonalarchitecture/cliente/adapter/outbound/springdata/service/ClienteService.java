@@ -5,19 +5,21 @@ import com.example.hexagonalarchitecture.cliente.domain.model.EnderecoModel;
 import com.example.hexagonalarchitecture.cliente.domain.model.dto.ClienteInputDto;
 import com.example.hexagonalarchitecture.cliente.domain.ports.in.ClienteUseCase;
 import com.example.hexagonalarchitecture.cliente.domain.ports.out.ClienteRepositoryPort;
-import com.example.hexagonalarchitecture.cliente.domain.ports.out.ViaCepRepositoryPort;
+import com.example.hexagonalarchitecture.cliente.domain.ports.out.EnderecoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+import static com.example.hexagonalarchitecture.cliente.adapter.outbound.springdata.transform.ClienteTransform.fromDtoToModel;
+
 @Service
 @RequiredArgsConstructor
 public class ClienteService implements ClienteUseCase {
 
     private final ClienteRepositoryPort clienteRepositoryPort;
-    private final ViaCepRepositoryPort viaCepRepositoryPort;
+    private final EnderecoRepositoryPort enderecoRepositoryPort;
 
     @Override
     public List<ClienteModel> buscarClientes() {
@@ -31,19 +33,8 @@ public class ClienteService implements ClienteUseCase {
 
     @Override
     public ClienteModel salvarCliente(ClienteInputDto clienteInputDto) {
-        EnderecoModel enderecoModel = viaCepRepositoryPort.getEndereco(clienteInputDto.cep());
-        return clienteRepositoryPort.save(convertInputDtoToModel(clienteInputDto, enderecoModel));
-    }
-
-    private ClienteModel convertInputDtoToModel(ClienteInputDto clienteInputDto, EnderecoModel enderecoModel) {
-        return ClienteModel.builder()
-                .id(null)
-                .nome(clienteInputDto.nome())
-                .cpf(clienteInputDto.cpf())
-                .email(clienteInputDto.email())
-                .telefone(clienteInputDto.telefone())
-                .endereco(enderecoModel)
-                .build();
+        EnderecoModel enderecoModel = enderecoRepositoryPort.getEndereco(clienteInputDto.cep());
+        return clienteRepositoryPort.save(fromDtoToModel(clienteInputDto, enderecoModel));
     }
 
     @Override
